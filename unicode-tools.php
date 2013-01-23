@@ -7,7 +7,7 @@
  * @copyright: Kerem Gunes (2013) <http://qeremy.com/>
  * @licence  : GNU General Public License v3.0 <http://www.gnu.org/licenses/gpl.html>
  * 
- * Note: These functions are work properly if the containing file is "encoded in UTF-8 (or/and without BOM)"
+ * Note: These functions work properly if the containing file is "encoded in UTF-8 (or/and without BOM)"
  */
 
 mb_internal_encoding('utf-8'); // @important
