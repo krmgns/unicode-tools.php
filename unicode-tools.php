@@ -1,13 +1,13 @@
 <?php
 /**
  * Unicode Tools
- * A buch of unicode functions that make sometimes coding PHP more easy...
+ * A buch of unicode functions that make sometimes coding PHP
  * 
  * @version  : v0.1
  * @copyright: Kerem Gunes (2013) <http://qeremy.com/>
  * @licence  : GNU General Public License v3.0 <http://www.gnu.org/licenses/gpl.html>
  * 
- * Note: These functions work properly if the containing file is "encoded in UTF-8 (or/and without BOM)"
+ * Note: These functions are work properly if the containing file is "encoded in UTF-8 (or/and without BOM)"
  */
 
 mb_internal_encoding('utf-8'); // @important
@@ -92,27 +92,27 @@ function ucwords_unicode($str) {
  */
 function ucfirst_turkish($str) {
     return mb_convert_case(
-        str_replace('i', 'I', mb_substr($str, 0, 1)), MB_CASE_UPPER)
+        str_replace('i', 'İ', mb_substr($str, 0, 1)), MB_CASE_UPPER)
             . mb_substr($str, 1);
 }
 
 function lcfirst_turkish($str) {
     return mb_convert_case(
-        str_replace('I', 'i', mb_substr($str, 0, 1)), MB_CASE_LOWER)
+        str_replace('I', 'ı', mb_substr($str, 0, 1)), MB_CASE_LOWER)
             . mb_substr($str, 1);
 }
 
 function ucfirst_turkish_v2($str) {
     $tmp = preg_split('//u', $str, 2, PREG_SPLIT_NO_EMPTY);
     return mb_convert_case(
-        str_replace('i', 'I', $tmp[0]), MB_CASE_UPPER)
+        str_replace('i', 'İ', $tmp[0]), MB_CASE_UPPER)
             . $tmp[1];
 }
 
 function lcfirst_turkish_v2($str) {
     $tmp = preg_split('//u', $str, 2, PREG_SPLIT_NO_EMPTY);
     return mb_convert_case(
-        str_replace('I', 'i', $tmp[0]), MB_CASE_LOWER)
+        str_replace('I', 'ı', $tmp[0]), MB_CASE_LOWER)
             . $tmp[1];
 }
 
