@@ -2,11 +2,11 @@
 /**
  * Unicode Tools
  * A buch of unicode functions that make sometimes coding PHP
- * 
+ *
  * @version  : v0.1
  * @copyright: Kerem Gunes (2013) <http://qeremy.com/>
  * @licence  : GNU General Public License v3.0 <http://www.gnu.org/licenses/gpl.html>
- * 
+ *
  * Note: These functions work properly if the containing file is "encoded in UTF-8 (or/and without BOM)"
  */
 
@@ -14,7 +14,7 @@ mb_internal_encoding('utf-8'); // @important
 
 /**
  * A proper (logical) substr alternative for unicode strings
- * 
+ *
  * $str = 'Büyük'               // Big
  * $s = 0                       // start from "0" (nth) char
  * $l = 3                       // get "3" chars
@@ -22,14 +22,14 @@ mb_internal_encoding('utf-8'); // @important
  * mb_substr($str, $s, $l)      // Bü
  * substr_unicode($str, $s, $l) // Büy
  */
-function substr_unicode($str, $s, $l = null) {
+function substr_unicode($str, $start, $length = null) {
     return join('', array_slice(
-        preg_split('//u', $str, -1, PREG_SPLIT_NO_EMPTY), $s, $l));
+        preg_split('~~u', $str, -1, PREG_SPLIT_NO_EMPTY), $start, $length));
 }
 
 /**
  * A alternative unicode string shuffle
- * 
+ *
  * $str = 'Şeker yârim'      // My sweet love
  * str_shuffle($str)         // i?eymrTekr ?
  * str_shuffle_unicode($str) // Sr mreyeikâ
@@ -42,7 +42,7 @@ function str_shuffle_unicode($str) {
 
 /**
  * An alternative for unicode string chunk
- * 
+ *
  * $str = 'Yarım kilo çay'      // Half kilo tea
  * chunk_split($str, 4)         // too long for doc, test yourself pls
  * chunk_split_unicode($str, 4) // too long for doc, test yourself pls
@@ -62,12 +62,12 @@ function chunk_split_unicode($str, $l = 76, $e = "\r\n") {
  */
 function lcfirst_unicode($str) {
     return mb_convert_case(
-        mb_substr($str, 0, 1), MB_CASE_LOWER) . 
+        mb_substr($str, 0, 1), MB_CASE_LOWER) .
         mb_substr($str, 1);
 }
 function ucfirst_unicode($str) {
     return mb_convert_case(
-        mb_substr($str, 0, 1), MB_CASE_UPPER) . 
+        mb_substr($str, 0, 1), MB_CASE_UPPER) .
         mb_substr($str, 1);
 }
 
@@ -85,7 +85,7 @@ function ucwords_unicode($str) {
 
 /**
  * A proper Turkish solution for ucfirst/lcfirst
- * 
+ *
  * $str = 'iyilik güzelLİK'
  * ucfirst($str)         // Iyilik güzelLİK
  * ucfirst_turkish($str) // İyilik güzelLİK
@@ -118,7 +118,7 @@ function lcfirst_turkish_v2($str) {
 
 /**
  * A proper Turkish solution for ucwords/lcwords
- * 
+ *
  * $str = 'iyilik güzelLİK şeker'
  * ucwords($str)         // Iyilik GüzelLİK şeker
  * ucwords_turkish($str) // İyilik GüzelLİK Şeker
@@ -137,7 +137,7 @@ function lcwords_turkish($str) {
 
 /**
  * A proper unicode string split
- * 
+ *
  * $str = 'Ilık süt'
  * str_split($s, 3)
  * str_split_unicode($s, 3)
@@ -147,14 +147,14 @@ function str_split_unicode($str, $l = 0) {
         for ($i = 0, $len = mb_strlen($str); $i < $len; $i += $l) {
             $ret[] = mb_substr($str, $i, $l);
         }
-        return $ret;   
+        return $ret;
     }
     return preg_split('//u', $str, -1, PREG_SPLIT_NO_EMPTY);
 }
 
 /**
  * A personal approach counting unicode chars
- * 
+ *
  * $str = 'şeker şeker yâriiiiiiiiiimmmmm' // sugar sugar love
  * count_chars_unicode($str, 'â'))         // frequency of "â"
  * count_chars_unicode($str))              // count of uniq chars
@@ -172,7 +172,7 @@ function count_chars_unicode($str, $x = false) {
 
 /**
  * A proper unicode string padder
- * 
+ *
  * $str = '.'
  * str_pad($str, 10, 'AO', STR_PAD_BOTH)
  * str_pad_unicode($str, 10, 'ÄÖ', STR_PAD_BOTH)
@@ -201,7 +201,7 @@ function str_pad_unicode($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT) {
             $result = mb_substr($result, 0, $pad_len);
         } else if ($dir == STR_PAD_LEFT) {
             $result = str_repeat($pad_str, $repeat);
-            $result = mb_substr($result, 0, 
+            $result = mb_substr($result, 0,
                         $pad_len - (($str_len - $pad_str_len) + $pad_str_len))
                     . $str;
         }
@@ -212,7 +212,7 @@ function str_pad_unicode($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT) {
 
 /**
  * A weird unicode string replacer
- * 
+ *
  * $str = 'äbc äbc'
  * strtr($str, 'ä', 'a')                  // a�bc a�bc
  * strtr($str, 'äåö', 'äåö')              // oabc oabc ??
@@ -236,15 +236,40 @@ function strtr_unicode($str, $a = '', $b = '') {
 
 /**
  * A simple approach to unicode words count
- * 
+ *
  * $str = 'äb"c äb3c a_b!'
  * echo str_word_count($str)         // 6
  * echo str_word_count_unicode($str) // 6
- * 
+ *
  * print_r(str_word_count($str, 1))
  * print_r(str_word_count_unicode($str, 1))
  */
 function str_word_count_unicode($str, $format = 0) {
     $words = preg_split('~[\s0-9_]|[^\w]~u', $str, -1, PREG_SPLIT_NO_EMPTY);
     return ($format === 0) ? count($words) : $words;
+}
+
+/**
+ * Unicode substr_count example with "case-sensitive" option
+ *
+ * $s = 'Ümit yüzüm gözüm...';
+ * echo substr_count_unicode($s, 'ü');            // 3
+ * echo substr_count_unicode($s, 'ü', false);     // 4
+ * echo substr_count_unicode($s, 'ü', false, 10); // 1
+ *
+ * echo substr_count_unicode($s, 'üm');           // 2
+ * echo substr_count_unicode($s, 'üm', false);    // 3
+ */
+function substr_count_unicode($str, $substr, $caseSensitive = true, $offset = 0, $length = null) {
+    if ($offset) {
+        // Depens "substr_unicode" function above
+        $str = substr_unicode($str, $offset, $length);
+    }
+
+    $pattern = $caseSensitive
+        ? '~(?:'. preg_quote($substr) .')~u'
+        : '~(?:'. preg_quote($substr) .')~ui';
+    preg_match_all($pattern, $str, $matches);
+
+    return isset($matches[0]) ? count($matches[0]) : 0;
 }
