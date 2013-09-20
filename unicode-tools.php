@@ -262,14 +262,16 @@ function str_word_count_unicode($str, $format = 0) {
  */
 function substr_count_unicode($str, $substr, $caseSensitive = true, $offset = 0, $length = null) {
     if ($offset) {
-        // Depens "substr_unicode" function above
         $str = substr_unicode($str, $offset, $length);
     }
 
     $pattern = $caseSensitive
         ? '~(?:'. preg_quote($substr) .')~u'
         : '~(?:'. preg_quote($substr) .')~ui';
-    preg_match_all($pattern, $str, $matches);
 
-    return isset($matches[0]) ? count($matches[0]) : 0;
+    if (preg_match_all($pattern, $str, $matches)) {
+        return isset($matches[0]) ? count($matches[0]) : 0;
+    }
+
+    return 0;
 }
