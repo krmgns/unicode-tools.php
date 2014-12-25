@@ -142,14 +142,12 @@ function lcwords_turkish($str) {
  * str_split($s, 3)
  * str_split_unicode($s, 3)
  */
-function str_split_unicode($str, $l = 0) {
-    if ($l > 0) {
-        for ($i = 0, $len = mb_strlen($str); $i < $len; $i += $l) {
-            $ret[] = mb_substr($str, $i, $l);
-        }
-        return $ret;
+function str_split_unicode($str, $len = 1) {
+    $tmp = preg_split('~~u', $str, -1, PREG_SPLIT_NO_EMPTY);
+    if ($len > 1) {
+        $tmp = array_map('join', array_chunk($tmp, $len));
     }
-    return preg_split('//u', $str, -1, PREG_SPLIT_NO_EMPTY);
+    return $tmp;
 }
 
 /**
