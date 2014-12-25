@@ -1,6 +1,6 @@
 All descriptions you need in `unicode-tools.php` file.
 
-** Function Map
+** Functions List
 
 ```php
 - substr_unicode()
