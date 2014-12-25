@@ -3,7 +3,7 @@
  * Unicode Tools
  * A buch of unicode functions that make sometimes coding PHP
  *
- * @version  : v0.1
+ * @version  : v0.2
  * @copyright: Kerem Gunes (2013) <http://qeremy.com/>
  * @licence  : GNU General Public License v3.0 <http://www.gnu.org/licenses/gpl.html>
  *
