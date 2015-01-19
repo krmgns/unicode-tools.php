@@ -1,7 +1,7 @@
 <?php
 /**
  * Unicode Tools
- * A buch of unicode functions that make sometimes coding PHP
+ * A buch of unicode functions that make sometimes coding PHP easy and enjoyful...
  *
  * @version  : v0.2
  * @copyright: Kerem Gunes (2013) <http://qeremy.com/>
